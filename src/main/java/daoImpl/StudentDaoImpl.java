@@ -7,6 +7,10 @@ import dao.StudentDao;
 import model.Student;
 import util.HibernateUtil;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
+
 public class StudentDaoImpl implements StudentDao {
 
 	public void insert(Student student) {
@@ -38,6 +42,15 @@ public class StudentDaoImpl implements StudentDao {
 			e.printStackTrace();
 		}
 		return student;
+	}
+
+	public List<Student> findAll() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Student> criteria = builder.createQuery(Student.class);
+		criteria.from(Student.class);
+		List<Student> students = session.createQuery(criteria).getResultList();
+		return students;
 	}
 
 	public void delete(int id) {

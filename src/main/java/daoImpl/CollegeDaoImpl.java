@@ -2,10 +2,14 @@ package daoImpl;
 
 import dao.CollegeDao;
 import model.College;
+import model.Student;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 
 public class CollegeDaoImpl implements CollegeDao {
 
@@ -38,6 +42,15 @@ public class CollegeDaoImpl implements CollegeDao {
             e.printStackTrace();
         }
         return college;
+    }
+
+    public List<College> findAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<College> criteria = builder.createQuery(College.class);
+        criteria.from(College.class);
+        List<College> colleges = session.createQuery(criteria).getResultList();
+        return colleges;
     }
 
     public void delete(int id) {

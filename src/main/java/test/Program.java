@@ -8,6 +8,7 @@ import model.College;
 import model.Student;
 import model.Teacher;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Program {
@@ -16,31 +17,11 @@ public class Program {
         Student student2 = new Student("Christiano","Ronaldo","Madrid","Oracle");
         Student student3 = new Student("Diego","Maradona","Napoli" ,"java");
 
-        Set<Student> studentList = new HashSet<>();
-        studentList.add(student1);
-        studentList.add(student2);
-        studentList.add(student3);
-
         Teacher teacher1 = new Teacher ("George","Orwell","London",120000);
         Teacher teacher2 = new Teacher ("Jacques","Brel","Bobigny",90000);
         Teacher teacher3 = new Teacher("Johnny","Cash","Nashville",75000);
 
-        Set<Teacher> teacherList = new HashSet<>();
-        teacherList.add(teacher1);
-        teacherList.add(teacher2);
-        teacherList.add(teacher3);
-
-        College college1 = new College("Montreal College", studentList, teacherList);
-
-        StudentDao sDao = new StudentDaoImpl();
-        sDao.insert(student1);
-        sDao.insert(student2);
-        sDao.insert(student3);
-
-        TeacherDaoImpl tDao = new TeacherDaoImpl();
-        tDao.insert(teacher1);
-        tDao.insert(teacher2);
-        tDao.insert(teacher3);
+        College college1 = new College("Montreal College");
 
         //Relacionamento Student - College
         student1.setCollege(college1);
@@ -55,13 +36,35 @@ public class Program {
         CollegeDaoImpl cDao = new CollegeDaoImpl();
         cDao.insert(college1);
 
-        Student student = sDao.findById(student1.getId());
-        System.out.println("Student 1: " + student.toString());
+        StudentDao sDao = new StudentDaoImpl();
+        sDao.insert(student1);
+        sDao.insert(student2);
+        sDao.insert(student3);
 
-        Teacher teacher = tDao.findById(teacher1.getId());
-        System.out.println("Teacher 1: " + teacher.toString());
+        TeacherDaoImpl tDao = new TeacherDaoImpl();
+        tDao.insert(teacher1);
+        tDao.insert(teacher2);
+        tDao.insert(teacher3);
 
-        College college = cDao.findById(college1.getId());
-        System.out.println("College 1: " + college.toString());
+
+        List<Student> students = sDao.findAll();
+        System.out.println("Students on database: ");
+        for(Student s : students) {
+            System.out.println(s.toString());
+        }
+
+        System.out.println("*******************");
+        List<Teacher> teachers = tDao.findAll();
+        System.out.println("Teachers on database: ");
+        for(Teacher t : teachers) {
+            System.out.println(t.toString());
+        }
+
+        System.out.println("*******************");
+        List<College> colleges = cDao.findAll();
+        System.out.println("Colleges on database: ");
+        for(College c : colleges) {
+            System.out.println(c.toString());
+        }
     }
 }

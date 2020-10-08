@@ -22,10 +22,8 @@ public class College {
 		
 	}
 
-	public College(String collegeName, Set<Student> studentList, Set<Teacher> teacherList) {
+	public College(String collegeName) {
 		this.collegeName = collegeName;
-		this.students = studentList;
-		this.teachers = teacherList;
 	}
 	
 	public int getId() {
@@ -39,18 +37,6 @@ public class College {
 	}
 	public void setCollegeName(String collegeName) {
 		this.collegeName = collegeName;
-	}
-	public Set<Student> getStudents() {
-		return students;
-	}
-	public void setStudents(Set<Student> students) {
-		this.students = students;
-	}
-	public Set<Teacher> getTeachers() {
-		return teachers;
-	}
-	public void setTeachers(Set<Teacher> teachers) {
-		this.teachers = teachers;
 	}
 	
 	@Override

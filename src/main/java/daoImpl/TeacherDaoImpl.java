@@ -1,11 +1,16 @@
 package daoImpl;
 
 import dao.TeacherDao;
+import model.College;
 import model.Teacher;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
+
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 
 public class TeacherDaoImpl implements TeacherDao {
 
@@ -38,6 +43,15 @@ public class TeacherDaoImpl implements TeacherDao {
             e.printStackTrace();
         }
         return teacher;
+    }
+
+    public List<Teacher> findAll() {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<Teacher> criteria = builder.createQuery(Teacher.class);
+        criteria.from(Teacher.class);
+        List<Teacher> teachers = session.createQuery(criteria).getResultList();
+        return teachers;
     }
 
     public void delete(int id) {
